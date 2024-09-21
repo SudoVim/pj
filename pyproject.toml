@@ -9,6 +9,10 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 
+[tool.poetry.scripts]
+pjp = "pj.p:main"
+
+
 
 [build-system]
 requires = ["poetry-core"]
