@@ -11,6 +11,7 @@ python = "^3.10"
 
 [tool.poetry.scripts]
 pjp = "pj.p:main"
+pju = "pj.u:main"
 
 
 
