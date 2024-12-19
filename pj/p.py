@@ -8,12 +8,9 @@ import subprocess
 import sys
 
 
-def main():
-    """main function"""
-    parser = argparse.ArgumentParser(
-        description="Pull the latest from the default branch",
-    )
-    parser.parse_args(sys.argv[1:])
+def get_default_branch(args):
+    if args.default_branch:
+        return args.default_branch
 
     p1 = subprocess.Popen(
         [
@@ -31,7 +28,18 @@ def main():
         ],
         stdin=p1.stdout,
     )
-    default_branch = out.split()[-1].decode()
+    return out.split()[-1].decode()
+
+
+def main():
+    """main function"""
+    parser = argparse.ArgumentParser(
+        description="Pull the latest from the default branch",
+    )
+    parser.add_argument("default_branch", nargs="?", help="Default branch to use")
+    args = parser.parse_args(sys.argv[1:])
+
+    default_branch = get_default_branch(args)
 
     has_changes = bool(subprocess.check_output(["git", "diff", "-M", "-C"])) or bool(
         subprocess.check_output(["git", "diff", "-M", "-C", "--staged"])
